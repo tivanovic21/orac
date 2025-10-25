@@ -48,7 +48,7 @@ Predstavlja pojedini ugostiteljski objekt (kafić, restoran, fast-food, slastič
 | `naziv` | naziv objekta (VARCHAR) |
 | `opis` | opis objekta (TEXT) |
 | `prosjecna_ocjena` | prosječna ocjena objekta od strane korisnika (DECIMAL) |
-| `cjenovni_rang` | cjenovni rang objekta u obliku enumeracije $, $$, $$$ (VARCHAR) |
+| `cjenovni_rang` | cjenovni rang objekta u obliku enumeracije \$, \$\$, \$\$\$ (VARCHAR) |
 | `vlasnik` | vlasnik objekta (VARCHAR) |
 | `dostupna_dostava` | označava ima li objekt mogućnost dostave (BOOLEAN) |
 | `datum_unosa` | datum i vrijeme unosa podatka u bazu (DATETIME) |
