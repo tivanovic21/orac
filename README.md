@@ -24,6 +24,14 @@ Sukladno sa CC0 (Creative Commons Zero) licencom, svi podaci u sklopu ovog proje
 
 ---
 
+## STRUKTURA REPOZITORIJA
+
+U repozitoriju se nalaze .json i .csv dokumenti sa podacima iz baze kao i dump baze za mogući restore. Uz to prisutan je i poddirektorij `skripte` unutar kojeg se nalaze dokumenti za lakše / automatizirano dobivanje tih dokumenata. 
+
+U budućnosti će sadržaj repozitorija biti proširen sa programskim kodom. 
+
+---
+
 ## OPIS PODATAKA
 
 Ovaj skup podataka opisuje **kafiće i restorane** na području Republike Hrvatske.  
@@ -48,7 +56,7 @@ Predstavlja pojedini ugostiteljski objekt (kafić, restoran, fast-food, slastič
 | `naziv` | naziv objekta (VARCHAR) |
 | `opis` | opis objekta (TEXT) |
 | `prosjecna_ocjena` | prosječna ocjena objekta od strane korisnika (DECIMAL) |
-| `cjenovni_rang` | cjenovni rang objekta u obliku enumeracije \$, \$\$, \$\$\$ (VARCHAR) |
+| `cjenovni_rang` | cjenovni rang objekta u obliku enumeracije `$`, `$$`, `$$$` (VARCHAR) |
 | `vlasnik` | vlasnik objekta (VARCHAR) |
 | `dostupna_dostava` | označava ima li objekt mogućnost dostave (BOOLEAN) |
 | `datum_unosa` | datum i vrijeme unosa podatka u bazu (DATETIME) |
