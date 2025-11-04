@@ -1,0 +1,438 @@
+[
+    {
+        "id_objekta": 10,
+        "naziv": "Program Bar",
+        "tip_objekta": "kafić",
+        "opis": "This cafe provides you with nice food and a place to rest after a long walk.",
+        "prosjecna_ocjena": 4.80,
+        "cjenovni_rang": "$",
+        "vlasnik": "Saša Žerajić",
+        "dostupna_dostava": false,
+        "datum_unosa": "2025-10-23T16:28:27.104604",
+        "kontakt": {
+            "web_stranica": "https://www.instagram.com/program_bar/",
+            "kontakt_broj": "+385989938279",
+            "email": "program.programbar@gmail.com"
+        },
+        "lokacije": [
+            {
+                "ulica": "Martićeva ulica",
+                "kucni_broj": "14F",
+                "grad": "Zagreb",
+                "latitude": 45.81207000,
+                "longitude": 15.98930000,
+                "radno_vrijeme": "07:00–23:00"
+            },
+            {
+                "ulica": "Petrova ulica",
+                "kucni_broj": "21",
+                "grad": "Zagreb",
+                "latitude": 45.81690300,
+                "longitude": 15.99548900,
+                "radno_vrijeme": "08:00–23:00"
+            }
+        ],
+        "tagovi": [
+            {
+                "naziv": "Terasa",
+                "opis": "Vanjski prostor za sjedenje"
+            },
+            {
+                "naziv": "Klimatizacija",
+                "opis": "Klimatizirani unutarnji prostor"
+            },
+            {
+                "naziv": "Plaćanje karticom",
+                "opis": "Prihvaća plaćanje debitnim/kreditnim karticama"
+            }
+        ]
+    },
+    {
+        "id_objekta": 9,
+        "naziv": "Mr. Fogg",
+        "tip_objekta": "kafić",
+        "opis": "The first steampunk bar in Zagreb.",
+        "prosjecna_ocjena": 4.70,
+        "cjenovni_rang": "$",
+        "vlasnik": "Emil Tocauer",
+        "dostupna_dostava": false,
+        "datum_unosa": "2025-10-23T16:23:56.099344",
+        "kontakt": {
+            "web_stranica": "https://www.facebook.com/BarMrFogg",
+            "kontakt_broj": "+38516272650",
+            "email": "mr.fogg.zagreb@gmail.com"
+        },
+        "lokacije": [
+            {
+                "ulica": "Martićeva ulica",
+                "kucni_broj": "31",
+                "grad": "Zagreb",
+                "latitude": 45.81243100,
+                "longitude": 15.99149200,
+                "radno_vrijeme": "07:00–00:00"
+            }
+        ],
+        "tagovi": [
+            {
+                "naziv": "Terasa",
+                "opis": "Vanjski prostor za sjedenje"
+            },
+            {
+                "naziv": "Plaćanje karticom",
+                "opis": "Prihvaća plaćanje debitnim/kreditnim karticama"
+            }
+        ]
+    },
+    {
+        "id_objekta": 8,
+        "naziv": "Botaničar",
+        "tip_objekta": "kafić",
+        "opis": "Botaničar, a budding flower of creativity on Zagreb’s urban map. Bar with an original botanical twist. Home of arts and crafts, nurturing those little pleasures of life.",
+        "prosjecna_ocjena": 4.60,
+        "cjenovni_rang": "$",
+        "vlasnik": "Marko Krneta",
+        "dostupna_dostava": false,
+        "datum_unosa": "2025-10-23T16:16:29.797888",
+        "kontakt": {
+            "web_stranica": "https://www.facebook.com/BotanicarZagreb/",
+            "kontakt_broj": null,
+            "email": "botanicar.zg@gmail.com"
+        },
+        "lokacije": [
+            {
+                "ulica": "Trg Marka Marulića",
+                "kucni_broj": "6",
+                "grad": "Zagreb",
+                "latitude": 45.80627400,
+                "longitude": 15.97139700,
+                "radno_vrijeme": "08:00–23:00"
+            }
+        ],
+        "tagovi": [
+            {
+                "naziv": "WiFi",
+                "opis": "Besplatan bežični internet za goste"
+            },
+            {
+                "naziv": "Parking",
+                "opis": "Dostupan parking prostor"
+            },
+            {
+                "naziv": "Terasa",
+                "opis": "Vanjski prostor za sjedenje"
+            },
+            {
+                "naziv": "Plaćanje karticom",
+                "opis": "Prihvaća plaćanje debitnim/kreditnim karticama"
+            }
+        ]
+    },
+    {
+        "id_objekta": 7,
+        "naziv": "Krivi Put",
+        "tip_objekta": "kafić",
+        "opis": "Krivi Put is the place to go to when you feel like avoiding responsibilities.",
+        "prosjecna_ocjena": 4.80,
+        "cjenovni_rang": "$",
+        "vlasnik": "Nenad Barbić",
+        "dostupna_dostava": false,
+        "datum_unosa": "2025-10-23T16:11:21.053375",
+        "kontakt": {
+            "web_stranica": "https://www.facebook.com/pages/Krivi-Put/134656319955740",
+            "kontakt_broj": "+38514837701",
+            "email": null
+        },
+        "lokacije": [
+            {
+                "ulica": "Savska cesta",
+                "kucni_broj": "14",
+                "grad": "Zagreb",
+                "latitude": 45.80477600,
+                "longitude": 15.96555100,
+                "radno_vrijeme": "08:00–00:00"
+            }
+        ],
+        "tagovi": [
+            {
+                "naziv": "Terasa",
+                "opis": "Vanjski prostor za sjedenje"
+            },
+            {
+                "naziv": "Plaćanje karticom",
+                "opis": "Prihvaća plaćanje debitnim/kreditnim karticama"
+            }
+        ]
+    },
+    {
+        "id_objekta": 6,
+        "naziv": "Bacchus Jazz Bar",
+        "tip_objekta": "kafić",
+        "opis": "Laidback jazz sessions, beer & coffee at a cellar bar with a courtyard sheltered by fig trees.",
+        "prosjecna_ocjena": 4.70,
+        "cjenovni_rang": "$",
+        "vlasnik": "Duje Oman",
+        "dostupna_dostava": false,
+        "datum_unosa": "2025-10-23T16:02:43.649361",
+        "kontakt": {
+            "web_stranica": "https://www.facebook.com/bacchusjazzbar",
+            "kontakt_broj": "+38598322804",
+            "email": null
+        },
+        "lokacije": [
+            {
+                "ulica": "Trg Kralja Tomislava",
+                "kucni_broj": "16",
+                "grad": "Zagreb",
+                "latitude": 45.80642300,
+                "longitude": 15.97769400,
+                "radno_vrijeme": "09:00–00:00"
+            }
+        ],
+        "tagovi": [
+            {
+                "naziv": "Terasa",
+                "opis": "Vanjski prostor za sjedenje"
+            },
+            {
+                "naziv": "Plaćanje karticom",
+                "opis": "Prihvaća plaćanje debitnim/kreditnim karticama"
+            }
+        ]
+    },
+    {
+        "id_objekta": 4,
+        "naziv": "Kiyomi",
+        "tip_objekta": "restoran",
+        "opis": "KIYOMI is an Asian restaurant passionate about creating delicious and unique dishes that blend traditional Dim Sum, Robata, and Sushi flavors.",
+        "prosjecna_ocjena": 4.80,
+        "cjenovni_rang": "$$",
+        "vlasnik": "Vid Nikolić",
+        "dostupna_dostava": false,
+        "datum_unosa": "2025-10-23T15:41:26.470459",
+        "kontakt": {
+            "web_stranica": "https://www.kiyomi.hr",
+            "kontakt_broj": "+38516474897",
+            "email": "reservations@kiyomi.hr"
+        },
+        "lokacije": [
+            {
+                "ulica": "Gajeva Ulica",
+                "kucni_broj": "10",
+                "grad": "Zagreb",
+                "latitude": 45.81090710,
+                "longitude": 15.97638390,
+                "radno_vrijeme": "12:00–00:00"
+            }
+        ],
+        "tagovi": [
+            {
+                "naziv": "WiFi",
+                "opis": "Besplatan bežični internet za goste"
+            },
+            {
+                "naziv": "Plaćanje karticom",
+                "opis": "Prihvaća plaćanje debitnim/kreditnim karticama"
+            },
+            {
+                "naziv": "Japanska hrana",
+                "opis": "Restoran nudi japansku hranu poput sushi-a"
+            }
+        ]
+    },
+    {
+        "id_objekta": 3,
+        "naziv": "Batak",
+        "tip_objekta": "restoran",
+        "opis": "Najpoznatiji smo po sočnim i ukusnim jelima s roštilja poput nezaobilaznih mazalica, sočnih ćevapa, gurmanske pljeskavice, ili punjene vješalice.",
+        "prosjecna_ocjena": 4.60,
+        "cjenovni_rang": "$$",
+        "vlasnik": "Boris Stojić",
+        "dostupna_dostava": true,
+        "datum_unosa": "2025-10-23T15:28:57.038325",
+        "kontakt": {
+            "web_stranica": "https://batak.hr",
+            "kontakt_broj": "+38516471111",
+            "email": null
+        },
+        "lokacije": [
+            {
+                "ulica": "Avenija Većeslava Holjevca",
+                "kucni_broj": "62",
+                "grad": "Zagreb",
+                "latitude": 45.77769852,
+                "longitude": 15.97968674,
+                "radno_vrijeme": "11:00–23:00"
+            },
+            {
+                "ulica": "Ulica Ivana Tkaličića",
+                "kucni_broj": "70",
+                "grad": "Zagreb",
+                "latitude": 45.81752000,
+                "longitude": 15.97626000,
+                "radno_vrijeme": "11:00–23:00"
+            },
+            {
+                "ulica": "Ulica Jakova Gotovca",
+                "kucni_broj": "1",
+                "grad": "Zagreb",
+                "latitude": 45.81519300,
+                "longitude": 15.99443300,
+                "radno_vrijeme": "11:00–23:00"
+            },
+            {
+                "ulica": "Gajeva Ulica",
+                "kucni_broj": "10",
+                "grad": "Zagreb",
+                "latitude": 45.81090700,
+                "longitude": 15.97638400,
+                "radno_vrijeme": "12:00–00:00"
+            }
+        ],
+        "tagovi": [
+            {
+                "naziv": "WiFi",
+                "opis": "Besplatan bežični internet za goste"
+            },
+            {
+                "naziv": "Parking",
+                "opis": "Dostupan parking prostor"
+            },
+            {
+                "naziv": "Terasa",
+                "opis": "Vanjski prostor za sjedenje"
+            },
+            {
+                "naziv": "Plaćanje karticom",
+                "opis": "Prihvaća plaćanje debitnim/kreditnim karticama"
+            }
+        ]
+    },
+    {
+        "id_objekta": 2,
+        "naziv": "La Štruk",
+        "tip_objekta": "restoran",
+        "opis": "Serving only strukli, traditional Croatian specialty from Zagreb area.",
+        "prosjecna_ocjena": 4.60,
+        "cjenovni_rang": "$",
+        "vlasnik": "Alen Markulin",
+        "dostupna_dostava": false,
+        "datum_unosa": "2025-10-23T15:20:22.418532",
+        "kontakt": {
+            "web_stranica": "https://www.lastruk.com",
+            "kontakt_broj": "+38514837701",
+            "email": null
+        },
+        "lokacije": [
+            {
+                "ulica": "Skalinska ulica",
+                "kucni_broj": "5",
+                "grad": "Zagreb",
+                "latitude": 45.81493600,
+                "longitude": 15.97685800,
+                "radno_vrijeme": "11:00–22:00"
+            }
+        ],
+        "tagovi": [
+            {
+                "naziv": "WiFi",
+                "opis": "Besplatan bežični internet za goste"
+            },
+            {
+                "naziv": "Terasa",
+                "opis": "Vanjski prostor za sjedenje"
+            },
+            {
+                "naziv": "Vegetarijanski",
+                "opis": "Nudi vegetarijanske opcije"
+            },
+            {
+                "naziv": "Plaćanje karticom",
+                "opis": "Prihvaća plaćanje debitnim/kreditnim karticama"
+            }
+        ]
+    },
+    {
+        "id_objekta": 1,
+        "naziv": "Heritage",
+        "tip_objekta": "snack bar",
+        "opis": "Heritage is a tiny snack bar.",
+        "prosjecna_ocjena": 4.80,
+        "cjenovni_rang": "$",
+        "vlasnik": "Silvije Polanšćak",
+        "dostupna_dostava": false,
+        "datum_unosa": "2025-10-23T15:05:13.12959",
+        "kontakt": {
+            "web_stranica": "https://foodheritage.hr/heritage/",
+            "kontakt_broj": null,
+            "email": "croatianfoodheritage@gmail.com"
+        },
+        "lokacije": [
+            {
+                "ulica": "Petrinjska ulica",
+                "kucni_broj": "14",
+                "grad": "Zagreb",
+                "latitude": 45.81080600,
+                "longitude": 15.97969600,
+                "radno_vrijeme": "12:15–20:00"
+            }
+        ],
+        "tagovi": [
+            {
+                "naziv": "Terasa",
+                "opis": "Vanjski prostor za sjedenje"
+            },
+            {
+                "naziv": "Plaćanje karticom",
+                "opis": "Prihvaća plaćanje debitnim/kreditnim karticama"
+            }
+        ]
+    },
+    {
+        "id_objekta": 5,
+        "naziv": "Pizzeria Zero Zero",
+        "tip_objekta": "pizzeria",
+        "opis": "At this place guests can delve deep into delicious dishes, and order good seafood pizza, tuna and meat pizza.",
+        "prosjecna_ocjena": 4.50,
+        "cjenovni_rang": "$$",
+        "vlasnik": "Siniša Matijević",
+        "dostupna_dostava": true,
+        "datum_unosa": "2025-10-23T15:50:34.271809",
+        "kontakt": {
+            "web_stranica": "https://zerozero.com.hr/about-us/",
+            "kontakt_broj": "+385995266444",
+            "email": null
+        },
+        "lokacije": [
+            {
+                "ulica": "Vlaška ulica",
+                "kucni_broj": "35",
+                "grad": "Zagreb",
+                "latitude": 45.81398000,
+                "longitude": 15.98198100,
+                "radno_vrijeme": "11:30–23:00"
+            }
+        ],
+        "tagovi": [
+            {
+                "naziv": "WiFi",
+                "opis": "Besplatan bežični internet za goste"
+            },
+            {
+                "naziv": "Parking",
+                "opis": "Dostupan parking prostor"
+            },
+            {
+                "naziv": "Terasa",
+                "opis": "Vanjski prostor za sjedenje"
+            },
+            {
+                "naziv": "Vegetarijanski",
+                "opis": "Nudi vegetarijanske opcije"
+            },
+            {
+                "naziv": "Plaćanje karticom",
+                "opis": "Prihvaća plaćanje debitnim/kreditnim karticama"
+            }
+        ]
+    }
+]
