@@ -14,8 +14,27 @@ export async function getObjekti(): Promise<Objekt[]> {
   }
 
   const data = (await res.json()) as Objekt[];
+  return data;
+}
 
-  console.log('Fetched objekti:', data);
+export async function getFilteredObjekti(
+  searchTerm: string,
+  searchField: string = 'wildcard'
+): Promise<Objekt[]> {
+  const params = new URLSearchParams({
+    searchTerm,
+    searchField
+  });
 
+  const res = await fetch(`${API_BASE}/${OBJEKT_URL}/getfiltered?${params.toString()}`, {
+    credentials: 'omit'
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`API error ${res.status}: ${text}`);
+  }
+
+  const data = (await res.json()) as Objekt[];
   return data;
 }

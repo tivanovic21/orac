@@ -21,5 +21,12 @@ namespace orac.api.Controllers
             var result = await _objektService.GetAllAsync();
             return Ok(result);
         }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetFiltered([FromQuery] string searchTerm, [FromQuery] string searchField = "wildcard")
+        {
+            var result = await _objektService.GetFilteredAsync(searchTerm, searchField);
+            return Ok(result);
+        }
     }
 }
