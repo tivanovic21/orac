@@ -20,12 +20,29 @@ export async function getObjekti(): Promise<Objekt[]> {
 
 export async function getFilteredObjekti(
     searchTerm: string,
-    searchField: string = 'wildcard'
+    searchField: string = 'wildcard',
+    dostupnaDostava: boolean | null = null,
+    cjenovniRang: string | null = null,
+    minOcjena: number | null = null,
+    maxOcjena: number | null = null
 ): Promise<Objekt[]> {
     const params = new URLSearchParams({
         searchTerm,
         searchField
     });
+
+    if (dostupnaDostava !== null) {
+        params.append('dostupnaDostava', dostupnaDostava.toString());
+    }
+    if (cjenovniRang !== null) {
+        params.append('cjenovniRang', cjenovniRang);
+    }
+    if (minOcjena !== null) {
+        params.append('minOcjena', minOcjena.toString());
+    }
+    if (maxOcjena !== null) {
+        params.append('maxOcjena', maxOcjena.toString());
+    }
 
     const res = await fetch(`${API_BASE}/${OBJEKT_URL}/getfiltered?${params.toString()}`, {
         credentials: 'omit'

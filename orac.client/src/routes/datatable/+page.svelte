@@ -10,13 +10,33 @@
 	let loading = true;
 	let err: string | null = null;
 
-	async function fetchObjekti(searchTerm?: string, searchField?: string) {
+	async function fetchObjekti(
+		searchTerm?: string,
+		searchField?: string,
+		dostupnaDostava?: boolean | null,
+		cjenovniRang?: string | null,
+		minOcjena?: number | null,
+		maxOcjena?: number | null
+	) {
 		loading = true;
 		err = null;
 
 		try {
-			if (searchTerm && searchTerm.trim() !== '') {
-				objekti = await getFilteredObjekti(searchTerm.trim(), searchField || 'wildcard');
+			if (
+				(searchTerm && searchTerm.trim() !== '') ||
+				dostupnaDostava !== null ||
+				cjenovniRang !== null ||
+				minOcjena !== null ||
+				maxOcjena !== null
+			) {
+				objekti = await getFilteredObjekti(
+					searchTerm?.trim() || '',
+					searchField || 'wildcard',
+					dostupnaDostava ?? null,
+					cjenovniRang ?? null,
+					minOcjena ?? null,
+					maxOcjena ?? null
+				);
 			} else {
 				objekti = await getObjekti();
 			}
@@ -28,9 +48,19 @@
 		}
 	}
 
-	function handleFilter(event: CustomEvent<{ searchTerm: string; searchField: string }>) {
-		const { searchTerm, searchField } = event.detail;
-		fetchObjekti(searchTerm, searchField);
+	function handleFilter(
+		event: CustomEvent<{
+			searchTerm: string;
+			searchField: string;
+			dostupnaDostava: boolean | null;
+			cjenovniRang: string | null;
+			minOcjena: number | null;
+			maxOcjena: number | null;
+		}>
+	) {
+		const { searchTerm, searchField, dostupnaDostava, cjenovniRang, minOcjena, maxOcjena } =
+			event.detail;
+		fetchObjekti(searchTerm, searchField, dostupnaDostava, cjenovniRang, minOcjena, maxOcjena);
 	}
 
 	function handleClear() {
@@ -48,7 +78,7 @@
 			<h1 class="mb-1 text-2xl font-bold">Pregled Objekata</h1>
 			<p class="text-gray-600">Pretražite i filtrirajte kafiće i restorane</p>
 		</div>
-		<a href="/" class="border px-4 py-2 hover:bg-gray-50"> ← Natrag </a>
+		<a href="/" class="border px-4 py-2 hover:bg-gray-50"> &larr; Natrag </a>
 	</div>
 
 	<FilterForm on:filter={handleFilter} on:clear={handleClear} />
