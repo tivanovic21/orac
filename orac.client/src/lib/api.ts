@@ -1,40 +1,75 @@
 import type { Objekt } from './types/types';
+import { env } from '$env/dynamic/public';
 
-const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:5000'; 
-const OBJEKT_URL = 'api/objekt';
+const API_BASE = env.PUBLIC_API_URL;
+const OBJEKT_URL = env.PUBLIC_API_OBJEKTI_ENDPOINT;
 
 export async function getObjekti(): Promise<Objekt[]> {
-  const res = await fetch(`${API_BASE}/${OBJEKT_URL}/getall`, {
-    credentials: 'omit'
-  });
+    const res = await fetch(`${API_BASE}/${OBJEKT_URL}/getall`, {
+        credentials: 'omit'
+    });
 
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`API error ${res.status}: ${text}`);
-  }
+    if (!res.ok) {
+        const text = await res.text();
+        throw new Error(`API error ${res.status}: ${text}`);
+    }
 
-  const data = (await res.json()) as Objekt[];
-  return data;
+    const data = (await res.json()) as Objekt[];
+    return data;
 }
 
 export async function getFilteredObjekti(
-  searchTerm: string,
-  searchField: string = 'wildcard'
+    searchTerm: string,
+    searchField: string = 'wildcard'
 ): Promise<Objekt[]> {
-  const params = new URLSearchParams({
-    searchTerm,
-    searchField
-  });
+    const params = new URLSearchParams({
+        searchTerm,
+        searchField
+    });
 
-  const res = await fetch(`${API_BASE}/${OBJEKT_URL}/getfiltered?${params.toString()}`, {
-    credentials: 'omit'
-  });
+    const res = await fetch(`${API_BASE}/${OBJEKT_URL}/getfiltered?${params.toString()}`, {
+        credentials: 'omit'
+    });
 
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`API error ${res.status}: ${text}`);
-  }
+    if (!res.ok) {
+        const text = await res.text();
+        throw new Error(`API error ${res.status}: ${text}`);
+    }
 
-  const data = (await res.json()) as Objekt[];
-  return data;
+    const data = (await res.json()) as Objekt[];
+    return data;
+}
+
+export async function exportCsv(objekti: Objekt[]): Promise<Blob> {
+    const res = await fetch(`${API_BASE}/${OBJEKT_URL}/exportcsv`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(objekti),
+    });
+
+    if (!res.ok) {
+        const text = await res.text();
+        throw new Error(`Export CSV error ${res.status}: ${text}`);
+    }
+
+    return await res.blob();
+}
+
+export async function exportJson(objekti: Objekt[]): Promise<Blob> {
+    const res = await fetch(`${API_BASE}/${OBJEKT_URL}/exportjson`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(objekti),
+    });
+
+    if (!res.ok) {
+        const text = await res.text();
+        throw new Error(`Export JSON error ${res.status}: ${text}`);
+    }
+
+    return await res.blob();
 }
