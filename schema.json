@@ -1,0 +1,172 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://or.fer.unizg.hr/kafici_restorani.json",
+    "type": "array",
+    "title": "Kafići i restorani u Hrvatskoj",
+    "description": "Skup podataka o kafićima i restoranima u Republici Hrvatskoj.",
+    "items": {
+        "type": "object",
+        "title": "Objekt",
+        "description": "Predstavlja kafić ili restoran.",
+        "properties": {
+            "id_objekta": {
+                "type": "number",
+                "title": "ID objekta",
+                "description": "Jedinstveni identifikator objekta"
+            },
+            "naziv": {
+                "type": "string",
+                "title": "Naziv",
+                "description": "Naziv objekta"
+            },
+            "tip_objekta": {
+                "type": "string",
+                "title": "Tip objekta",
+                "description": "Tip objekta (npr. kafić, restoran, pizzeria, ...)"
+            },
+            "opis": {
+                "type": "string",
+                "title": "Opis",
+                "description": "Kratki opis objekta"
+            },
+            "prosjecna_ocjena": {
+                "type": "number",
+                "title": "Prosječna ocjena",
+                "description": "Prosječna ocjena objekta"
+            },
+            "cjenovni_rang": {
+                "type": "string",
+                "title": "Cjenovni rang",
+                "description": "Cjenovni rang objekta (enumeracija $, $$, $$$)"
+            },
+            "vlasnik": {
+                "type": "string",
+                "title": "Vlasnik",
+                "description": "Ime vlasnika objekta"
+            },
+            "dostupna_dostava": {
+                "type": "boolean",
+                "title": "Dostupna dostava",
+                "description": "Informacija o dostupnosti dostave"
+            },
+            "datum_unosa": {
+                "type": "string",
+                "format": "date-time",
+                "title": "Datum unosa",
+                "description": "Datum i vrijeme unosa podataka o objektu"
+            },
+            "kontakt": {
+                "type": [
+                    "object",
+                    "null"
+                ],
+                "title": "Kontakt",
+                "description": "Kontaktni podaci objekta",
+                "properties": {
+                    "web_stranica": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Web stranica objekta",
+                        "description": "URL web stranice objekta, može predstavljati i socijalnu mrežu"
+                    },
+                    "kontakt_broj": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Kontakt broj",
+                        "description": "Kontakt broj objekta"
+                    },
+                    "email": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Email",
+                        "description": "Email adresa objekta"
+                    }
+                },
+                "required": []
+            },
+            "lokacije": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "title": "Lokacija",
+                    "description": "Podaci o lokaciji objekta te radnom vremenu na toj lokaciji",
+                    "properties": {
+                        "ulica": {
+                            "type": "string",
+                            "title": "Ulica",
+                            "description": "Naziv ulice na kojoj se objekt nalazi"
+                        },
+                        "kucni_broj": {
+                            "type": "string",
+                            "title": "Kućni broj",
+                            "description": "Kućni broj na kojem se objekt nalazi"
+                        },
+                        "grad": {
+                            "type": "string",
+                            "title": "Grad",
+                            "description": "Naziv grada u kojem se objekt nalazi"
+                        },
+                        "latitude": {
+                            "type": "number",
+                            "title": "Geografska širina",
+                            "description": "Geografska širina lokacije objekta"
+                        },
+                        "longitude": {
+                            "type": "number",
+                            "title": "Geografska dužina",
+                            "description": "Geografska dužina lokacije objekta"
+                        },
+                        "radno_vrijeme": {
+                            "type": "string",
+                            "title": "Radno vrijeme",
+                            "description": "Radno vrijeme objekta na toj lokaciji"
+                        }
+                    },
+                    "required": [
+                        "ulica",
+                        "kucni_broj",
+                        "grad"
+                    ]
+                }
+            },
+            "tagovi": {
+                "type": [
+                    "array",
+                    "null"
+                ],
+                "items": {
+                    "type": "object",
+                    "title": "Tag",
+                    "description": "Oznake dostupnih sadržaja u objektu",
+                    "properties": {
+                        "naziv": {
+                            "type": "string",
+                            "title": "Naziv taga",
+                            "description": "Naziv oznake"
+                        },
+                        "opis": {
+                            "type": "string",
+                            "title": "Opis taga",
+                            "description": "Opis oznake"
+                        }
+                    },
+                    "required": [
+                        "naziv"
+                    ]
+                }
+            }
+        },
+        "required": [
+            "id_objekta",
+            "naziv",
+            "tip_objekta",
+            "lokacije"
+        ]
+    }
+}
