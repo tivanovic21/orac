@@ -30,6 +30,62 @@ namespace orac.api.Services
             return objekti.ToDtoList();
         }
 
+        public async Task<ObjektDto?> GetByIdAsync(int id)
+        {
+            var objekt = await _context.Objekti
+                .Where(o => o.IdObjekta == id)
+                .Include(o => o.TipObjekta)
+                .Include(o => o.Kontakt)
+                .Include(o => o.Lokacije)
+                .Include(o => o.ObjektTagovi)
+                    .ThenInclude(ot => ot.Tag)
+                .FirstOrDefaultAsync();
+
+            return objekt?.ToDto();
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var objekt = await _context.Objekti.FindAsync(id);
+            if (objekt == null)
+            {
+                return false;
+            }
+
+            _context.Objekti.Remove(objekt);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<ObjektDto?> UpdateAsync(ObjektDto objektDto)
+        {
+            var existingObjekt = await _context.Objekti.FindAsync(objektDto.IdObjekta);
+            if (existingObjekt == null)
+            {
+                return null;
+            }
+
+            existingObjekt.Naziv = objektDto.Naziv;
+            existingObjekt.Opis = objektDto.Opis;
+            existingObjekt.ProsjecnaOcjena = objektDto.ProsjecnaOcjena;
+            existingObjekt.CjenovniRang = objektDto.CjenovniRang;
+            existingObjekt.Vlasnik = objektDto.Vlasnik;
+            existingObjekt.DostupnaDostava = objektDto.DostupnaDostava;
+
+            _context.Objekti.Update(existingObjekt);
+            await _context.SaveChangesAsync();
+
+            return existingObjekt.ToDto();
+        }
+
+        public async Task<ObjektDto?> CreateAsync(ObjektDto objektDto)
+        {
+            var newObjekt = objektDto.ToEntity();
+            _context.Objekti.Add(newObjekt);
+            await _context.SaveChangesAsync();
+            return newObjekt.ToDto();
+        }
+
         public async Task<IEnumerable<ObjektDto>> GetFilteredAsync(
             string searchTerm, 
             string searchField,
@@ -93,6 +149,57 @@ namespace orac.api.Services
 
             var objekti = await query.ToListAsync();
             return objekti.ToDtoList();
+        }
+
+        public async Task<IEnumerable<ObjektDto>> GetObjektiClosestToYouAsync(decimal latitude, decimal longitude, double? radiusInKm = null)
+        {
+            var objekti = await _context.Objekti
+                .Include(o => o.TipObjekta)
+                .Include(o => o.Kontakt)
+                .Include(o => o.Lokacije)
+                .Include(o => o.ObjektTagovi)
+                    .ThenInclude(ot => ot.Tag)
+                .ToListAsync();
+
+            if (!radiusInKm.HasValue)
+            {
+                radiusInKm = 5.0;
+            }
+
+            var result = objekti.Where(o => o.Lokacije.Any(l =>
+            {
+                if (!l.Latitude.HasValue || !l.Longitude.HasValue)
+                    return false;
+
+                var distance = HaversineDistance(
+                    (double)latitude,
+                    (double)longitude,
+                    (double)l.Latitude.Value,
+                    (double)l.Longitude.Value);
+
+                return !radiusInKm.HasValue || distance <= radiusInKm.Value;
+            })).ToList();
+
+            return result.ToDtoList();
+        }
+
+        private double HaversineDistance(double latitude1, double longitude1, double latitude2, double longitude2)
+        {
+            const double R = 6371; // Radius Zemlje u km
+            var latDiff = ToRadians(latitude2 - latitude1);
+            var lonDiff = ToRadians(longitude2 - longitude1);
+
+            var a = Math.Sin(latDiff / 2) * Math.Sin(latDiff / 2) +
+                    Math.Cos(ToRadians(latitude1)) * Math.Cos(ToRadians(latitude2)) *
+                    Math.Sin(lonDiff / 2) * Math.Sin(lonDiff / 2);
+
+            var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            return R * c;
+        }
+
+        private static double ToRadians(double v)
+        {
+            return v * (Math.PI / 180);
         }
 
         public Task<string> ExportToCsvFromDataAsync(IEnumerable<ObjektDto> objekti)
