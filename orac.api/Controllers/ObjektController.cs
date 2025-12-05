@@ -1,6 +1,8 @@
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using orac.api.Interfaces;
+using orac.api.Models;
+using orac.api.DTOS;
 
 namespace orac.api.Controllers
 {
@@ -23,13 +25,13 @@ namespace orac.api.Controllers
                 var result = await _objektService.GetAllAsync();
                 if (result == null || !result.Any())
                 {
-                    return NotFound("No objects found.");
+                    return NotFound(ApiResponse<object>.Error("No objects found."));
                 }
 
-                return Ok(result);
+                return Ok(ApiResponse<IEnumerable<ObjektDto>>.Success(result, "Objects retrieved successfully."));
             } catch (Exception ex)
             {
-                return StatusCode(500, $"An error occurred on the server: {ex.Message}");
+                return StatusCode(500, ApiResponse<object>.Error($"An error occurred on the server: {ex.Message}"));
             }
         }
 
@@ -38,7 +40,7 @@ namespace orac.api.Controllers
         {
             if (id <= 0)
             {
-                return BadRequest("ID must be greater than zero.");
+                return BadRequest(ApiResponse<object>.Error("ID must be greater than zero."));
             }
 
             try
@@ -46,13 +48,13 @@ namespace orac.api.Controllers
                 var result = await _objektService.GetByIdAsync(id);
                 if (result == null)
                 {
-                    return NotFound($"Object with ID {id} not found.");
+                    return NotFound(ApiResponse<object>.Error($"Object with ID {id} not found."));
                 }
 
-                return Ok(result);
+                return Ok(ApiResponse<ObjektDto>.Success(result, "Object retrieved successfully."));
             } catch (Exception ex)
             {
-                return StatusCode(500, $"Došlo je do greške na serveru: {ex.Message}");
+                return StatusCode(500, ApiResponse<object>.Error($"An error occurred on the server: {ex.Message}"));
             }
         }
 
@@ -61,7 +63,7 @@ namespace orac.api.Controllers
         {
             if (id <= 0)
             {
-                return BadRequest("ID must be greater than zero");
+                return BadRequest(ApiResponse<object>.Error("ID must be greater than zero"));
             }
 
              try
@@ -69,21 +71,21 @@ namespace orac.api.Controllers
                 var result = await _objektService.DeleteAsync(id);
                 if (!result)
                 {
-                    return NotFound($"Object with ID {id} not found.");
+                    return NotFound(ApiResponse<object>.Error($"Object with ID {id} not found."));
                 }
-                return Ok("Object has been successfully deleted.");
+                return Ok(ApiResponse<string>.Success("Object has been successfully deleted.", "Object deleted successfully."));
             } catch (Exception ex)
             {
-                return StatusCode(500, $"An error occurred on the server: {ex.Message}");
+                return StatusCode(500, ApiResponse<object>.Error($"An error occurred on the server: {ex.Message}"));
             }
         }
 
         [HttpPut("[action]")]
-        public async Task<IActionResult> Update([FromBody] DTOS.ObjektDto objektDto)
+        public async Task<IActionResult> Update([FromBody] ObjektDto objektDto)
         {
             if (objektDto == null || objektDto.IdObjekta <= 0)
             {
-                return BadRequest("Invalid object for update.");
+                return BadRequest(ApiResponse<object>.Error("Invalid object for update."));
             }
 
             try
@@ -91,31 +93,31 @@ namespace orac.api.Controllers
                 var result = await _objektService.UpdateAsync(objektDto);
                 if (result == null)
                 {
-                    return NotFound($"Object with ID {objektDto.IdObjekta} not found.");
+                    return NotFound(ApiResponse<object>.Error($"Object with ID {objektDto.IdObjekta} not found."));
                 }
 
-                return Ok(result);
+                return Ok(ApiResponse<ObjektDto>.Success(result, "Object updated successfully."));
             } catch (Exception ex)
             {
-                return StatusCode(500, $"An error occurred on the server: {ex.Message}");
+                return StatusCode(500, ApiResponse<object>.Error($"An error occurred on the server: {ex.Message}"));
             }
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> Create([FromBody] DTOS.ObjektDto objektDto)
+        public async Task<IActionResult> Create([FromBody] ObjektDto objektDto)
         {
             if (objektDto == null)
             {
-                return BadRequest("Invalid object for creation.");
+                return BadRequest(ApiResponse<object>.Error("Invalid object for creation."));
             }
 
             try
             {
                 var result = await _objektService.CreateAsync(objektDto);
-                return CreatedAtAction(nameof(GetById), new { id = result?.IdObjekta }, result);
+                return CreatedAtAction(nameof(GetById), new { id = result?.IdObjekta }, ApiResponse<ObjektDto>.Success(result!, "Object created successfully."));
             } catch (Exception ex)
             {
-                return StatusCode(500, $"An error occurred on the server: {ex.Message}");
+                return StatusCode(500, ApiResponse<object>.Error($"An error occurred on the server: {ex.Message}"));
             }
         }
 
@@ -142,13 +144,13 @@ namespace orac.api.Controllers
 
                 if (result == null || !result.Any())
                 {
-                    return NotFound("No objects match the search criteria.");
+                    return NotFound(ApiResponse<object>.Error("No objects match the search criteria."));
                 }   
 
-                return Ok(result);
+                return Ok(ApiResponse<IEnumerable<ObjektDto>>.Success(result, "Filtered objects retrieved successfully."));
             } catch (Exception ex)
             {
-                return StatusCode(500, $"An error occurred on the server: {ex.Message}");
+                return StatusCode(500, ApiResponse<object>.Error($"An error occurred on the server: {ex.Message}"));
             }
         }
 
@@ -167,12 +169,12 @@ namespace orac.api.Controllers
                 );
                 if (result == null || !result.Any())
                 {
-                    return NotFound("No objects match the search criteria.");
+                    return NotFound(ApiResponse<object>.Error("No objects match the search criteria."));
                 }
-                return Ok(result);
+                return Ok(ApiResponse<IEnumerable<ObjektDto>>.Success(result, "Top rated objects retrieved successfully."));
             } catch (Exception ex)
             {
-                return StatusCode(500, $"An error occurred on the server: {ex.Message}");
+                return StatusCode(500, ApiResponse<object>.Error($"An error occurred on the server: {ex.Message}"));
             }
         }
 
@@ -184,12 +186,12 @@ namespace orac.api.Controllers
                 var result = await _objektService.GetObjektiClosestToYouAsync(latitude, longitude, radiusInKm);
                 if (result == null || !result.Any())
                 {
-                    return NotFound("No objects match the search criteria.");
+                    return NotFound(ApiResponse<object>.Error("No objects match the search criteria."));
                 }
-                return Ok(result);
+                return Ok(ApiResponse<IEnumerable<ObjektDto>>.Success(result, "Nearby objects retrieved successfully."));
             } catch (Exception ex)
             {
-                return StatusCode(500, $"An error occurred on the server: {ex.Message}");
+                return StatusCode(500, ApiResponse<object>.Error($"An error occurred on the server: {ex.Message}"));
             }
         }   
 
