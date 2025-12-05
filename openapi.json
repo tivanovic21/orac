@@ -1,0 +1,962 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Kafići i Restorani API",
+        "description": "RESTful API za upravljanje podacima o kafićima i restoranima. API omogućuje dohvaćanje, filtriranje, kreiranje, ažuriranje i brisanje informacija o objektima te pretragu po lokaciji i ocjenama.",
+        "version": "1.0.0",
+        "contact": {
+            "name": "Toni Ivanović",
+            "email": "ti001615221@fer.hr"
+        },
+        "license": {
+            "name": "Creative Commons Zero",
+            "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:5000",
+            "description": "Development server"
+        }
+    ],
+    "paths": {
+        "/api/Objekt/GetAll": {
+            "get": {
+                "summary": "Dohvati sve objekte",
+                "description": "Vraća cjelokupnu kolekciju svih kafića i restorana u bazi podataka.",
+                "operationId": "getAllObjekti",
+                "tags": [
+                    "Objekti"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Uspješno dohvaćeni objekti",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ObjektCollectionResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nema pronađenih objekata",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Greška na serveru",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Objekt/GetById": {
+            "get": {
+                "summary": "Dohvati objekt po ID-u",
+                "description": "Vraća pojedinačni resurs iz kolekcije temeljem jedinstvenog identifikatora.",
+                "operationId": "getObjektById",
+                "tags": [
+                    "Objekti"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Jedinstveni identifikator objekta",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Uspješno dohvaćen objekt",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ObjektResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Neispravan ID",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Objekt nije pronađen",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Greška na serveru",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Objekt/Delete": {
+            "delete": {
+                "summary": "Obriši objekt",
+                "description": "Briše pojedinačni resurs iz kolekcije temeljem jedinstvenog identifikatora.",
+                "operationId": "deleteObjekt",
+                "tags": [
+                    "Objekti"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Jedinstveni identifikator objekta za brisanje",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Objekt uspješno obrisan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Neispravan ID",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Objekt nije pronađen",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Greška na serveru",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Objekt/Update": {
+            "put": {
+                "summary": "Ažuriraj objekt",
+                "description": "Ažurira elemente postojećeg resursa u kolekciji.",
+                "operationId": "updateObjekt",
+                "tags": [
+                    "Objekti"
+                ],
+                "requestBody": {
+                    "description": "Podaci objekta za ažuriranje",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ObjektDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Objekt uspješno ažuriran",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ObjektResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Neispravni podaci za ažuriranje",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Objekt nije pronađen",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Greška na serveru",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Objekt/Create": {
+            "post": {
+                "summary": "Kreiraj novi objekt",
+                "description": "Dodaje novi resurs u kolekciju kafića i restorana.",
+                "operationId": "createObjekt",
+                "tags": [
+                    "Objekti"
+                ],
+                "requestBody": {
+                    "description": "Podaci novog objekta",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ObjektDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Objekt uspješno kreiran",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ObjektResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Neispravni podaci za kreiranje",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Greška na serveru",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Objekt/GetFiltered": {
+            "get": {
+                "summary": "Filtriraj objekte",
+                "description": "Dohvaća filtriranu kolekciju objekata prema zadanim kriterijima pretrage (naziv, opis, dostava, cijenovni rang, ocjena).",
+                "operationId": "getFilteredObjekti",
+                "tags": [
+                    "Objekti"
+                ],
+                "parameters": [
+                    {
+                        "name": "searchTerm",
+                        "in": "query",
+                        "description": "Pojam za pretragu",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": ""
+                        }
+                    },
+                    {
+                        "name": "searchField",
+                        "in": "query",
+                        "description": "Polje za pretragu (wildcard, naziv, opis)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "wildcard",
+                            "enum": [
+                                "wildcard",
+                                "naziv",
+                                "opis"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "dostupnaDostava",
+                        "in": "query",
+                        "description": "Filter za dostupnost dostave",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "cjenovniRang",
+                        "in": "query",
+                        "description": "Filter za cijenovni rang (€, €€, €€€)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true,
+                            "enum": [
+                                "€",
+                                "€€",
+                                "€€€"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "minOcjena",
+                        "in": "query",
+                        "description": "Minimalna prosječna ocjena",
+                        "required": false,
+                        "schema": {
+                            "type": "number",
+                            "format": "decimal",
+                            "nullable": true,
+                            "minimum": 0,
+                            "maximum": 5
+                        }
+                    },
+                    {
+                        "name": "maxOcjena",
+                        "in": "query",
+                        "description": "Maksimalna prosječna ocjena",
+                        "required": false,
+                        "schema": {
+                            "type": "number",
+                            "format": "decimal",
+                            "nullable": true,
+                            "minimum": 0,
+                            "maximum": 5
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Uspješno dohvaćeni filtrirani objekti",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ObjektCollectionResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nema objekata koji odgovaraju kriterijima",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Greška na serveru",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Objekt/GetTopRatedObjekti": {
+            "get": {
+                "summary": "Dohvati najbolje ocijenjene objekte",
+                "description": "Vraća kolekciju najbolje ocijenjenih kafića i restorana (ocjena >= 4.5).",
+                "operationId": "getTopRatedObjekti",
+                "tags": [
+                    "Objekti"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Uspješno dohvaćeni najbolje ocijenjeni objekti",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ObjektCollectionResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nema pronađenih objekata",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Greška na serveru",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Objekt/GetObjektiClosestToYou": {
+            "get": {
+                "summary": "Dohvati najbliže objekte",
+                "description": "Vraća kolekciju objekata sortirane po udaljenosti od zadane lokacije.",
+                "operationId": "getObjektiClosestToYou",
+                "tags": [
+                    "Objekti"
+                ],
+                "parameters": [
+                    {
+                        "name": "latitude",
+                        "in": "query",
+                        "description": "Geografska širina lokacije korisnika",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "format": "decimal"
+                        }
+                    },
+                    {
+                        "name": "longitude",
+                        "in": "query",
+                        "description": "Geografska dužina lokacije korisnika",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "format": "decimal"
+                        }
+                    },
+                    {
+                        "name": "radiusInKm",
+                        "in": "query",
+                        "description": "Radijus pretrage u kilometrima (opciono)",
+                        "required": false,
+                        "schema": {
+                            "type": "number",
+                            "format": "double",
+                            "nullable": true,
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Uspješno dohvaćeni obližnji objekti",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ObjektCollectionResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nema objekata u zadanom radijusu",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Greška na serveru",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Objekt/ExportCsv": {
+            "post": {
+                "summary": "Eksportuj objekte u CSV format",
+                "description": "Konvertira kolekciju objekata u CSV datoteku za preuzimanje.",
+                "operationId": "exportCsv",
+                "tags": [
+                    "Export"
+                ],
+                "requestBody": {
+                    "description": "Kolekcija objekata za eksport",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/ObjektDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "CSV datoteka uspješno generirana",
+                        "content": {
+                            "text/csv": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Objekt/ExportJson": {
+            "post": {
+                "summary": "Eksportuj objekte u JSON format",
+                "description": "Konvertira kolekciju objekata u JSON datoteku za preuzimanje.",
+                "operationId": "exportJson",
+                "tags": [
+                    "Export"
+                ],
+                "requestBody": {
+                    "description": "Kolekcija objekata za eksport",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/ObjektDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "JSON datoteka uspješno generirana",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/OpenApi/GetOpenApiSpec": {
+            "get": {
+                "summary": "Dohvati OpenAPI specifikaciju",
+                "description": "Vraća OpenAPI 3.0.3 specifikaciju ovog API-ja u JSON formatu.",
+                "operationId": "getOpenApiSpec",
+                "tags": [
+                    "Metadata"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OpenAPI specifikacija uspješno dohvaćena",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "description": "OpenAPI 3.0.3 specifikacija"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Specifikacija nije pronađena",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Greška na serveru",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ObjektDto": {
+                "type": "object",
+                "required": [
+                    "idObjekta",
+                    "tipObjektaId",
+                    "kontaktId",
+                    "naziv",
+                    "dostupnaDostava",
+                    "datumUnosa"
+                ],
+                "properties": {
+                    "idObjekta": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Jedinstveni identifikator objekta"
+                    },
+                    "tipObjektaId": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "ID tipa objekta (kafić, restoran, itd.)"
+                    },
+                    "kontaktId": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "ID kontakta objekta"
+                    },
+                    "naziv": {
+                        "type": "string",
+                        "description": "Naziv objekta"
+                    },
+                    "opis": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Opis objekta"
+                    },
+                    "prosjecnaOcjena": {
+                        "type": "number",
+                        "format": "decimal",
+                        "nullable": true,
+                        "minimum": 0,
+                        "maximum": 5,
+                        "description": "Prosječna ocjena korisnika"
+                    },
+                    "cjenovniRang": {
+                        "type": "string",
+                        "nullable": true,
+                        "enum": [
+                            "€",
+                            "€€",
+                            "€€€"
+                        ],
+                        "description": "Cijenovni rang objekta"
+                    },
+                    "vlasnik": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Vlasnik objekta"
+                    },
+                    "dostupnaDostava": {
+                        "type": "boolean",
+                        "description": "Dostupnost usluge dostave"
+                    },
+                    "datumUnosa": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Datum unosa u bazu"
+                    },
+                    "tipObjekta": {
+                        "$ref": "#/components/schemas/TipObjektaDto"
+                    },
+                    "kontakt": {
+                        "$ref": "#/components/schemas/KontaktDto"
+                    },
+                    "lokacije": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/LokacijaDto"
+                        },
+                        "description": "Lista lokacija objekta"
+                    },
+                    "objektTagovi": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ObjektTagDto"
+                        },
+                        "description": "Lista tagova objekta"
+                    }
+                }
+            },
+            "TipObjektaDto": {
+                "type": "object",
+                "properties": {
+                    "idTipaObjekta": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "nazivTipa": {
+                        "type": "string"
+                    }
+                }
+            },
+            "KontaktDto": {
+                "type": "object",
+                "properties": {
+                    "idKontakta": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "adresaElektronskePoste": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "webStranica": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "telefon": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                }
+            },
+            "LokacijaDto": {
+                "type": "object",
+                "properties": {
+                    "idLokacije": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "objektId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "adresa": {
+                        "type": "string"
+                    },
+                    "geografskaSirina": {
+                        "type": "number",
+                        "format": "decimal"
+                    },
+                    "geografskaDuzina": {
+                        "type": "number",
+                        "format": "decimal"
+                    }
+                }
+            },
+            "ObjektTagDto": {
+                "type": "object",
+                "properties": {
+                    "objektId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "tagId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "tag": {
+                        "$ref": "#/components/schemas/TagDto"
+                    }
+                }
+            },
+            "TagDto": {
+                "type": "object",
+                "properties": {
+                    "idTaga": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "nazivTaga": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ObjektResponse": {
+                "type": "object",
+                "required": [
+                    "status",
+                    "message",
+                    "response"
+                ],
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "success",
+                            "error"
+                        ],
+                        "description": "Status odgovora"
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "Poruka o rezultatu operacije"
+                    },
+                    "response": {
+                        "$ref": "#/components/schemas/ObjektDto"
+                    }
+                }
+            },
+            "ObjektCollectionResponse": {
+                "type": "object",
+                "required": [
+                    "status",
+                    "message",
+                    "response"
+                ],
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "success",
+                            "error"
+                        ],
+                        "description": "Status odgovora"
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "Poruka o rezultatu operacije"
+                    },
+                    "response": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ObjektDto"
+                        }
+                    }
+                }
+            },
+            "SuccessResponse": {
+                "type": "object",
+                "required": [
+                    "status",
+                    "message",
+                    "response"
+                ],
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "success"
+                        ],
+                        "description": "Status odgovora"
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "Poruka o uspješnoj operaciji"
+                    },
+                    "response": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                }
+            },
+            "ErrorResponse": {
+                "type": "object",
+                "required": [
+                    "status",
+                    "message",
+                    "response"
+                ],
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "error"
+                        ],
+                        "description": "Status odgovora"
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "Poruka o grešci"
+                    },
+                    "response": {
+                        "type": "object",
+                        "nullable": true
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Objekti",
+            "description": "Operacije nad resursima kafića i restorana"
+        },
+        {
+            "name": "Export",
+            "description": "Operacije za eksport podataka"
+        },
+        {
+            "name": "Metadata",
+            "description": "Metapodaci i informacije o API-ju"
+        }
+    ]
+}
