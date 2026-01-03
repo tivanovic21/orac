@@ -17,6 +17,9 @@ namespace orac.api.Controllers
             _objektService = objektService;
         }
 
+        /// <summary>
+        /// Dohvati sve objekte iz baze.
+        /// </summary>
         [HttpGet("[action]")]
         public async Task<IActionResult> GetAll()
         {
@@ -35,6 +38,10 @@ namespace orac.api.Controllers
             }
         }
 
+        /// <summary>
+        /// Dohvati pojedinačni objekt po njegovom ID-u.
+        /// </summary>
+        /// <param name="id">Jedinstveni identifikator objekta (veći od 0).</param>
         [HttpGet("[action]")]
         public async Task<IActionResult> GetById([FromQuery] int id)
         {
@@ -58,6 +65,10 @@ namespace orac.api.Controllers
             }
         }
 
+        /// <summary>
+        /// Obriši objekt prema ID-u.
+        /// </summary>
+        /// <param name="id">ID objekta koji se briše.</param>
         [HttpDelete("[action]")]
         public async Task<IActionResult> Delete([FromQuery] int id)
         {
@@ -80,6 +91,10 @@ namespace orac.api.Controllers
             }
         }
 
+        /// <summary>
+        /// Ažuriraj postojeći objekt.
+        /// </summary>
+        /// <param name="objektDto">Podaci objekta za ažuriranje (mora sadržavati `IdObjekta`).</param>
         [HttpPut("[action]")]
         public async Task<IActionResult> Update([FromBody] ObjektDto objektDto)
         {
@@ -103,6 +118,10 @@ namespace orac.api.Controllers
             }
         }
 
+        /// <summary>
+        /// Kreiraj novi objekt u kolekciji.
+        /// </summary>
+        /// <param name="objektDto">Podaci novog objekta.</param>
         [HttpPost("[action]")]
         public async Task<IActionResult> Create([FromBody] ObjektDto objektDto)
         {
@@ -122,6 +141,15 @@ namespace orac.api.Controllers
         }
 
 
+        /// <summary>
+        /// Dohvati filtriranu listu objekata prema kriterijima.
+        /// </summary>
+        /// <param name="searchTerm">Pojam za pretragu.</param>
+        /// <param name="searchField">Polje pretrage (npr. wildcard, naziv, opis).</param>
+        /// <param name="dostupnaDostava">Filtriraj po dostupnosti dostave.</param>
+        /// <param name="cjenovniRang">Filtriraj po cjenovnom rangu.</param>
+        /// <param name="minOcjena">Minimalna prosječna ocjena.</param>
+        /// <param name="maxOcjena">Maksimalna prosječna ocjena.</param>
         [HttpGet("[action]")]
         public async Task<IActionResult> GetFiltered(
             [FromQuery] string searchTerm = "", 
@@ -154,6 +182,9 @@ namespace orac.api.Controllers
             }
         }
 
+        /// <summary>
+        /// Dohvati najbolje ocijenjene objekte (ocjena >= 4.5).
+        /// </summary>
         [HttpGet("[action]")]
         public async Task<IActionResult> GetTopRatedObjekti()
         {
@@ -178,6 +209,12 @@ namespace orac.api.Controllers
             }
         }
 
+        /// <summary>
+        /// Dohvati objekte najbliže zadanom geografskom položaju unutar opcionalnog radijusa.
+        /// </summary>
+        /// <param name="latitude">Geografska širina korisnika.</param>
+        /// <param name="longitude">Geografska dužina korisnika.</param>
+        /// <param name="radiusInKm">Radijus pretrage u kilometrima (opcionalno).</param>
         [HttpGet("[action]")]
         public async Task<IActionResult> GetObjektiClosestToYou([FromQuery] decimal latitude, [FromQuery] decimal longitude, [FromQuery] double? radiusInKm = null)
         {
@@ -195,6 +232,11 @@ namespace orac.api.Controllers
             }
         }   
 
+        /// <summary>
+        /// Eksportiraj predanu kolekciju objekata u CSV format.
+        /// </summary>
+        /// <param name="objekti">Kolekcija objekata za eksport.</param>
+        /// <returns>CSV sadržaj kao binarni file response (preuzimanje).</returns>
         [HttpPost("[action]")]
         public async Task<IActionResult> ExportCsv([FromBody] IEnumerable<DTOS.ObjektDto> objekti)
         {
@@ -203,6 +245,10 @@ namespace orac.api.Controllers
             return File(bytes, "text/csv; charset=utf-8", "kafici_restorani.csv");
         }
 
+        /// <summary>
+        /// Eksportiraj predanu kolekciju objekata u JSON format.
+        /// </summary>
+        /// <param name="objekti">Kolekcija objekata za eksport.</param>
         [HttpPost("[action]")]
         public async Task<IActionResult> ExportJson([FromBody] IEnumerable<DTOS.ObjektDto> objekti)
         {

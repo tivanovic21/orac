@@ -7,6 +7,9 @@ namespace orac.api.Controllers
     [Route("api/[controller]")]
     public class OpenApiController : ControllerBase
     {
+        /// <summary>
+        /// Retrieves the OpenAPI specification from a JSON file.
+        /// </summary>
         [HttpGet("[action]")]
         public IActionResult GetOpenApiSpec()
         {
@@ -19,7 +22,8 @@ namespace orac.api.Controllers
                 }
 
                 var specContent = System.IO.File.ReadAllText(specPath);
-                return Content(specContent, "application/json");
+                var parsed = System.Text.Json.JsonSerializer.Deserialize<object>(specContent);
+                return Ok(ApiResponse<object>.Success(parsed!, "OpenAPI specification retrieved."));
             }
             catch (Exception ex)
             {
