@@ -51,3 +51,9 @@ export interface Objekt {
   lokacije: Lokacija[];
   objektTagovi: ObjektTag[];
 }
+
+export interface ApiResponse<T> {
+  status: string;
+  message: string;
+  response: T;
+}

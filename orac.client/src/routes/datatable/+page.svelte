@@ -4,11 +4,13 @@
 	import FilterForm from '$lib/components/FilterForm.svelte';
 	import ObjektTable from '$lib/components/ObjektTable.svelte';
 	import ExportButtons from '$lib/components/ExportButtons.svelte';
-	import { getObjekti, getFilteredObjekti } from '$lib/api';
+	import { getObjekti, getFilteredObjekti, AuthenticationError } from '$lib/api';
+	import { login } from '$lib/auth';
 
 	let objekti: Objekt[] = [];
 	let loading = true;
 	let err: string | null = null;
+	let isAuthError = false;
 
 	async function fetchObjekti(
 		searchTerm?: string,
@@ -20,6 +22,7 @@
 	) {
 		loading = true;
 		err = null;
+		isAuthError = false;
 
 		try {
 			if (
@@ -41,7 +44,12 @@
 				objekti = await getObjekti();
 			}
 		} catch (e: any) {
-			err = e.message ?? 'Unknown error';
+			if (e instanceof AuthenticationError) {
+				isAuthError = true;
+				err = e.message;
+			} else {
+				err = e.message ?? 'Unknown error';
+			}
 			objekti = [];
 		} finally {
 			loading = false;
@@ -88,8 +96,35 @@
 			<p class="text-gray-600">Učitavanje...</p>
 		</div>
 	{:else if err}
-		<div class="border border-red-300 bg-red-50 p-4">
-			<p class="text-red-700">{err}</p>
+		<div class="rounded-lg border-2 bg-white p-8 text-center shadow-sm">
+			{#if isAuthError}
+				<h2 class="mb-2 text-xl font-bold text-gray-900">Autentikacija potrebna!</h2>
+				<p class="mb-6 text-gray-600">{err}</p>
+				<button
+					onclick={login}
+					class="rounded-lg bg-blue-600 px-6 py-3 font-medium text-white hover:bg-blue-700"
+				>
+					Prijavite se za nastavak
+				</button>
+			{:else}
+				<div class="mb-4">
+					<svg
+						class="mx-auto h-16 w-16 text-red-500"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+						/>
+					</svg>
+				</div>
+				<h2 class="mb-2 text-xl font-bold text-gray-900">Error</h2>
+				<p class="text-gray-600">{err}</p>
+			{/if}
 		</div>
 	{:else}
 		<div class="mb-3 flex items-center justify-between">
