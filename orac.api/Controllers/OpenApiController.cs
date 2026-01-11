@@ -8,7 +8,7 @@ namespace orac.api.Controllers
     public class OpenApiController : ControllerBase
     {
         /// <summary>
-        /// Retrieves the OpenAPI specification from a JSON file.
+        /// Dohvaća OpenAPI specifikaciju u JSON formatu
         /// </summary>
         [HttpGet("[action]")]
         public IActionResult GetOpenApiSpec()

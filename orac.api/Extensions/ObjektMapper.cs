@@ -11,6 +11,11 @@ namespace orac.api.Extensions
 
             var dto = new ObjektDto
             {
+                // json-ld
+                Context = "https://schema.org",
+                Type = "Kafić ili restoran",
+                Id = $"https://localhost:5000/api/objekt/getbyid?id={o.IdObjekta}",
+                
                 IdObjekta = o.IdObjekta,
                 TipObjektaId = o.TipObjektaId,
                 KontaktId = o.KontaktId,
