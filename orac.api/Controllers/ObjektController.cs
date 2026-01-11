@@ -1,13 +1,14 @@
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using orac.api.Interfaces;
-using orac.api.Models;
 using orac.api.DTOS;
+using Microsoft.AspNetCore.Authorization;
 
 namespace orac.api.Controllers
 {
     [ApiController] 
     [Route("api/[controller]")]
+    [Authorize]
     public class ObjektController : ControllerBase
     {
         private readonly IObjektService _objektService;
