@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using orac.api.Data;
 using orac.api.Interfaces;
@@ -36,6 +37,16 @@ builder.Services.AddCors(options =>
               .AllowCredentials());
 });
 
+builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(options =>
+        {
+            options.Authority = "https://dev-aemhpk78pqjj202s.us.auth0.com/";
+            options.Audience = "http://localhost:5000";
+        });
+
 
 var app = builder.Build();
 
@@ -47,6 +58,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors();
+app.UseAuthentication();
+app.UseAuthentication();
 app.MapControllers();
 
 app.Run();
