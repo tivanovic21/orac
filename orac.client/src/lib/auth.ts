@@ -48,18 +48,10 @@ export async function login() {
 export async function logout() {
     if (!auth0Client) return;
 
-    // samo lokalni flow, bez odjave s Auth0
-
     isAuthenticated.set(false);
     user.set(null);
 
-    Object.keys(localStorage).forEach(key => {
-        if (key.startsWith('@@auth0spajs@@')) {
-            localStorage.removeItem(key);
-        }
-    });
-
-    window.location.href = '/';
+    auth0Client.logout(); // pravi logout jer loklano svakako ne radi...
 }
 
 export async function getAccessToken() {
